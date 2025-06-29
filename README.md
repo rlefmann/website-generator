@@ -68,11 +68,18 @@ These posts are automatically listed on the homepage (`index.html`) in reverse c
 To enable this listing, your `pages/index.html` file must include the special placeholder `$index_table`, which will be replaced by a generated HTML table containing all blog post entries.
 
 ### Output directory
-When the site generator runs, it creates a new directory called `outputs` inside the input directory you specify. All generated HTML files, copied assets (like CSS and images), and other output files will be saved there. This keeps the original input files separate from the generated website.
+By default, when the site generator runs, it creates a new directory called `outputs` inside the input directory you specify. All generated HTML files, copied assets (like CSS and images), and other output files will be saved there. This keeps the original input files separate from the generated website.
 
 For example, if your input directory is `my-site`, the generated site will be in `my-site/outputs/`.
 
-You can then serve or upload the contents of this outputs folder as your static website.
+You can optionally specify a custom output directory using the `-o` or `--output` option:
+```sh
+website-generator -o ./custom_output_directory my-site
+```
+
+In this case, all generated files will be saved in `./custom_output_folder` instead.
+
+You can then serve or upload the contents of the outputs folder as your static website.
 
 ## Acknowledgments
 Inspired in part by [saait](https://codemadness.org/saait.html).

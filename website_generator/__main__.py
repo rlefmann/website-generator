@@ -1,5 +1,7 @@
 import sys
 import os
+import argparse
+
 from website_generator.utils import (
     validate_input_directory,
     copy_stylesheet,
@@ -11,21 +13,30 @@ from website_generator.constants import (
     PAGES_DIRNAME,
     INDEX_FILENAME
 )
-    
 from website_generator.config import read_config_dict
 from website_generator.html import generate_base_template
 from website_generator.pages import process_content_pages, process_index_page
 
-def main():
-    if len(sys.argv) != 2:
-        executable_name = os.path.basename(sys.argv[0])
-        print(f"Usage: {executable_name} <input-directory>", file=sys.stderr)
-        sys.exit(1)
-    input_dir = sys.argv[1]
-    validate_input_directory(input_dir)
+def parse_args():
+    parser = argparse.ArgumentParser(description="Website-Generator: Static site generator for blogs.")
+    parser.add_argument("input_dir", help="Path to input directory containing site source files")
+    parser.add_argument(
+        "-o", "--output",
+        help="Path to output directory (default: <input_dir>/outputs)",
+        default=None
+    )
+    return parser.parse_args()
 
-    # Create output directory:
-    output_dir = os.path.join(input_dir, 'outputs')
+
+def main():
+    args = parse_args()
+    input_dir = args.input_dir
+    validate_input_directory(input_dir)
+    
+    if args.output:
+        output_dir = args.output
+    else:
+        output_dir = os.path.join(input_dir, "outputs")
     os.makedirs(output_dir, exist_ok=True)
 
     config_path = os.path.join(input_dir, CONFIG_FILENAME)
@@ -44,6 +55,7 @@ def main():
     # Copy stylesheet and assets directory to output directory:
     copy_stylesheet(input_dir, output_dir)
     copy_assets_directory(input_dir, output_dir)
+
 
 if __name__ == "__main__":
     main()
