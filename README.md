@@ -28,6 +28,8 @@ your-site/
     └── other.html      # Other content pages
 ```
 
+An example of the required input directory structure can be found in the [example folder](./example).
+
 ### `config.ini`
 The config file must contain at least
 ```ini
