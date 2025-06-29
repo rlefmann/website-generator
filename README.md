@@ -1,5 +1,5 @@
 # website-generator
-A simple static website generator for blogs, written in Python.
+A simple static website generator.
 
 ## Installation
 ```sh
@@ -53,3 +53,5 @@ The template file should include placeholders using Python's $ syntax, e.g.:
 Any file in `pages/` matching the pattern `YYYY-MM-DD-title.html` is treated as a blog post.
 These will be listed on the homepage in reverse chronological order.
 
+## Acknowledgments
+Inspired in part by [saait](https://codemadness.org/saait.html).
