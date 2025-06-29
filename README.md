@@ -39,10 +39,20 @@ lang = en  # Optional, defaults to 'en'
 ```
 
 ### `template.html`
-The template file should include placeholders using Python's $ syntax, e.g.:
+The template file should include placeholders using Python’s `$` syntax. Most placeholder names correspond directly to keys in the `config.ini` file — for example, `$title` and `$author` will be replaced by the respective config values.
+
+In addition, there are two special placeholders that are not set in the config file but are dynamically provided for each page during generation:
+
+- `$pagetitle`: The title of the individual page (e.g., extracted from the HTML file)
+- `$content`: The main HTML content of the page
+
+Example template:
 ```html
 <html>
-  <head><title>$pagetitle</title></head>
+  <head>
+    <title>$pagetitle</title>
+    <meta name="author" content="${author}" />
+  </head>
   <body>
     <header><h1>$title</h1></header>
     <main>$content</main>
@@ -53,7 +63,16 @@ The template file should include placeholders using Python's $ syntax, e.g.:
 
 ### Blog posts
 Any file in `pages/` matching the pattern `YYYY-MM-DD-title.html` is treated as a blog post.
-These will be listed on the homepage in reverse chronological order.
+These posts are automatically listed on the homepage (`index.html`) in reverse chronological order (newest first).
+
+To enable this listing, your `pages/index.html` file must include the special placeholder `$index_table`, which will be replaced by a generated HTML table containing all blog post entries.
+
+### Output directory
+When the site generator runs, it creates a new directory called `outputs` inside the input directory you specify. All generated HTML files, copied assets (like CSS and images), and other output files will be saved there. This keeps the original input files separate from the generated website.
+
+For example, if your input directory is `my-site`, the generated site will be in `my-site/outputs/`.
+
+You can then serve or upload the contents of this outputs folder as your static website.
 
 ## Acknowledgments
 Inspired in part by [saait](https://codemadness.org/saait.html).
